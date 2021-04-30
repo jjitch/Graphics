@@ -1,6 +1,6 @@
-#version 150 core
-in vec4 position;
-void main()
+#version 120
+void main(void)
 {
-	gl_Position=position;
+	gl_Position=gl_Vertex;
+	gl_FrontColor = gl_Color;
 }

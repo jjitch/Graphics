@@ -4,7 +4,7 @@ GLuint prs::createProgram(const char* vsrc, const char* fsrc)
 {
 	const GLuint program(glCreateProgram());
 
-	if (vsrc != nullptr)
+	if (vsrc != NULL)
 	{
 		const GLuint vobj(glCreateShader(GL_VERTEX_SHADER));
 		glShaderSource(vobj, 1, &vsrc, NULL);
@@ -13,7 +13,7 @@ GLuint prs::createProgram(const char* vsrc, const char* fsrc)
 		glDeleteShader(vobj);
 	}
 
-	if (fsrc != nullptr)
+	if (fsrc != NULL)
 	{
 		const GLuint fobj(glCreateShader(GL_FRAGMENT_SHADER));
 		glShaderSource(fobj, 1, &fsrc, NULL);
@@ -67,7 +67,7 @@ GLboolean prs::printProgramInfoLog(GLuint program)
 
 bool prs::readShaderSource(const char* name, std::vector<GLchar>& buffer)
 {
-	if (name == nullptr) return false;
+	if (name == NULL) return false;
 	std::ifstream file(name, std::ios::binary);
 	if (file.fail())
 	{

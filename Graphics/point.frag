@@ -1,6 +1,5 @@
-#version 150 core
-in vec4 fragment;
-void main()
+#version 120
+void main(void)
 {
-	fragment = vec4(1.,0.,0.,1.);
+	gl_FragColor = gl_Color;
 }
