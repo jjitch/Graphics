@@ -14,7 +14,7 @@ constexpr prs::Object::Vertex rectangleVetex[] =
 	{-0.5, -0.5},
 	{ 0.5, -0.5},
 	{ 0.5,  0.5},
-	{-0.5,  0.5}
+	{-0.5,  1.0}
 };
 
 int main()
@@ -32,7 +32,7 @@ int main()
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	GLFWwindow* const window = glfwCreateWindow(640, 480, "SAMPLE", NULL, NULL);
+	GLFWwindow* const window = glfwCreateWindow(640, 480, "SAMPLE", nullptr, nullptr);
 	if (window == nullptr)
 	{
 		std::cerr << "Can't create GLFW window." << std::endl;
@@ -50,7 +50,7 @@ int main()
 
 	glfwSwapInterval(1);
 
-	glClearColor(0.f, 0.f, 0.f, 0.2f);
+	glClearColor(0.f, 0.5f, 0.5f, 0.2f);
 
 	const GLuint program(prs::loadProgram("point.vert", "point.frag"));
 
