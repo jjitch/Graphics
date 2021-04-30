@@ -4,6 +4,18 @@
 #include <cstdlib>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <memory>
+#include "graphic_functions.hpp"
+#include "Object.hpp"
+#include "Shape.hpp"
+
+constexpr prs::Object::Vertex rectangleVetex[] =
+{
+	{-0.5, -0.5},
+	{ 0.5, -0.5},
+	{ 0.5,  0.5},
+	{-0.5,  0.5}
+};
 
 int main()
 {
@@ -40,11 +52,16 @@ int main()
 
 	glClearColor(0.f, 0.f, 0.f, 0.2f);
 
+	const GLuint program(prs::loadProgram("point.vert", "point.frag"));
+
+	std::unique_ptr<const prs::Shape> shape(new prs::Shape(2, 4, rectangleVetex));
+
 	while (glfwWindowShouldClose(window) == GL_FALSE)
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
+		glUseProgram(program);
 
-		//implement drawing process here
+		shape->draw();
 
 		glfwSwapBuffers(window);
 
