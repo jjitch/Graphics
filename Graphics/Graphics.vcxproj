@@ -125,7 +125,7 @@
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);opengl32.lib;glfw3.lib;glew32s.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Users\junno\source\repos\Graphics\packages\glfw.3.3.4\build\native\lib\static\v142\x64;C:\Users\junno\source\repos\Graphics\packages\rxd_glew.1.10.0\build\native\lib\x64\v120\static;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>	libcmt.lib;msvcrt.dll;msvcrtd.lib</IgnoreSpecificDefaultLibraries>
-      <AdditionalOptions>/IGNORE:4099 /SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -147,7 +147,7 @@
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);opengl32.lib;glfw3.lib;glew32s.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Users\junno\source\repos\Graphics\packages\glfw.3.3.4\build\native\lib\static\v142\x64;C:\Users\junno\source\repos\Graphics\packages\rxd_glew.1.10.0\build\native\lib\x64\v120\static;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>	libcmt.lib;msvcrt.dll;msvcrtd.lib</IgnoreSpecificDefaultLibraries>
-      <AdditionalOptions>/IGNORE:4099 /SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/IGNORE:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -171,6 +171,7 @@
     <Import Project="..\packages\glfw.3.3.4\build\native\glfw.targets" Condition="Exists('..\packages\glfw.3.3.4\build\native\glfw.targets')" />
     <Import Project="..\packages\rxd_glew.redist.1.10.0\build\native\rxd_glew.redist.targets" Condition="Exists('..\packages\rxd_glew.redist.1.10.0\build\native\rxd_glew.redist.targets')" />
     <Import Project="..\packages\rxd_glew.1.10.0\build\native\rxd_glew.targets" Condition="Exists('..\packages\rxd_glew.1.10.0\build\native\rxd_glew.targets')" />
+    <Import Project="..\packages\glm.0.9.9.800\build\native\glm.targets" Condition="Exists('..\packages\glm.0.9.9.800\build\native\glm.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -179,5 +180,6 @@
     <Error Condition="!Exists('..\packages\glfw.3.3.4\build\native\glfw.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glfw.3.3.4\build\native\glfw.targets'))" />
     <Error Condition="!Exists('..\packages\rxd_glew.redist.1.10.0\build\native\rxd_glew.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\rxd_glew.redist.1.10.0\build\native\rxd_glew.redist.targets'))" />
     <Error Condition="!Exists('..\packages\rxd_glew.1.10.0\build\native\rxd_glew.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\rxd_glew.1.10.0\build\native\rxd_glew.targets'))" />
+    <Error Condition="!Exists('..\packages\glm.0.9.9.800\build\native\glm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glm.0.9.9.800\build\native\glm.targets'))" />
   </Target>
 </Project>
