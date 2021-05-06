@@ -11,7 +11,7 @@ namespace prs
 			const GLuint vobj(glCreateShader(GL_VERTEX_SHADER));
 			glShaderSource(vobj, 1, &vsrc, NULL);
 			glCompileShader(vobj);
-			if (printShaderInfoLog(vobj, "vertex shader")) __glewAttachShader(program, vobj);
+			if (printShaderInfoLog(vobj, "vertex shader")) glAttachShader(program, vobj);
 			glDeleteShader(vobj);
 		}
 
@@ -20,7 +20,7 @@ namespace prs
 			const GLuint fobj(glCreateShader(GL_FRAGMENT_SHADER));
 			glShaderSource(fobj, 1, &fsrc, NULL);
 			glCompileShader(fobj);
-			if (printShaderInfoLog(fobj, "vertex shader")) glAttachShader(program, fobj);
+			if (printShaderInfoLog(fobj, "fragment shader")) glAttachShader(program, fobj);
 			glDeleteShader(fobj);
 		}
 		glBindAttribLocation(program, 0, "position");
@@ -42,10 +42,10 @@ namespace prs
 		if (bufSize > 1)
 		{
 			std::vector<GLchar> infoLog(bufSize);
+			std::string log;
 			GLsizei length;
-			glGetShaderInfoLog(shader, bufSize, &length, &infoLog[0]);
-			std::cout << "aaaaaaaaa0" << std::endl;
-			std::cerr << infoLog.data() << std::endl;
+			glGetShaderInfoLog(shader, bufSize, &length, &log[0]);
+			std::cerr << log << std::endl;
 		}
 		return static_cast<GLboolean>(status);
 	}
