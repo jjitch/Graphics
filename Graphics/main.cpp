@@ -10,13 +10,15 @@
 using std::cout;
 using std::endl;;
 
+constexpr size_t WIDTH = 640;
+constexpr size_t HEIGHT = 480;
+
 
 constexpr prs::Object::Vertex rectangleVetex[] =
 {
-	{-0.5, -0.5},
-	{ 0.5, -0.5},
-	{ 0.5,  0.5},
-	{-0.5,  0.5}
+	{ -1.0, -1.0},
+	{ 0.0, 0.5},
+	{ 0.4, 0.1}
 };
 
 int main()
@@ -38,7 +40,7 @@ int main()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	// Window構造体を生成
-	GLFWwindow* const window = glfwCreateWindow(640, 480, "SAMPLE", nullptr, nullptr);
+	GLFWwindow* const window = glfwCreateWindow(WIDTH, HEIGHT, "SAMPLE", nullptr, nullptr);
 	if (window == nullptr)
 	{
 		std::cerr << "Can't create GLFW window." << endl;
@@ -59,8 +61,10 @@ int main()
 	// 垂直同期のタイミングを待つ
 	glfwSwapInterval(1);
 
-	glClearColor(20., 40., 200., 0.2f);
+	glClearColor(0.f, 0.f, 0.2f, 0.2f);
 
+	glViewport(100, 50, 300, 300);
+	// プログラムオブジェクトを作成する
 	const GLuint program(prs::loadProgram("point.vert", "point.frag"));
 
 	std::unique_ptr<const prs::Shape> shape(new prs::Shape(2, 4, rectangleVetex));

@@ -2,10 +2,10 @@
 
 prs::Object::Object(GLuint size, GLsizei vertexcount, const Vertex* vertex)
 {
-	// 頂点配列オブジェクト
+	// 頂点配列オブジェクトVAOを作る
 	glGenVertexArrays(1, &vao);
+	// VAOを紐づける(設定用)
 	glBindVertexArray(vao);
-
 	// 頂点バッファオブジェクトを作成する。
 	// glGenBuffers(GLsizei n, GLuint *buffers)
 	// n -> 作成する頂点バッファオブジェクトの数
@@ -20,7 +20,11 @@ prs::Object::Object(GLuint size, GLsizei vertexcount, const Vertex* vertex)
 	glBufferData(GL_ARRAY_BUFFER, vertexcount * sizeof(Vertex), vertex, GL_STATIC_DRAW);
 
 	// glVertexAttribPointer(GLuint index, GLuint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid *pointer)
-	glVertexAttribPointer(0, size, GL_DOUBLE, GL_FALSE, 0, 0);
+	// index : シェーダープログラムのリンク時にglBindAttribLocation()関数で指定した、データを受け取るattribute変数の場所。
+	// このシェーダープログラムではvertexの唯一のメンバpositionのindexに0を指定したので、ここでは0を指定する。
+	glVertexAttribPointer(0, size, GL_DOUBLE, GL_TRUE, 0, 0);
+	//glVertexAttribLPointer(0, size, GL_DOUBLE, 0, 0);
+
 	glEnableVertexAttribArray(0);
 }
 

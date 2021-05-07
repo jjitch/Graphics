@@ -14,6 +14,6 @@ namespace prs
 	
 	void Shape::execute() const
 	{
-		glDrawArrays(GL_LINE_LOOP, 0, vertexcount);
+		glDrawArrays(GL_TRIANGLES, 0, vertexcount);
 	}
 }
