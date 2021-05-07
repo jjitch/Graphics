@@ -57,10 +57,23 @@ int readShaderSource(std::string fileName)
 	return 0;
 }
 
+class A
+{
+public:
+	int a;
+	A(int _a) : a(_a) {}
+};
+
 int main()
 {
 	using namespace std;
-	vector<char> str;
-	if (readShaderSource1("test.vert", str)) cout << str.data() << endl;
-	readShaderSource("test.vert");
+	A stack(22);
+	A* heap = new A(30);
+	cout << stack.a << endl;
+	cout << heap->a << endl;
+	A* stack_ptr = &stack;
+	cout << stack_ptr->a << endl;
+	cout << (*stack_ptr).a << endl;
+	//delete heap;
+	//delete stack_ptr;
 }
