@@ -9,13 +9,15 @@ namespace prs
 	class Window
 	{
 		GLFWwindow* const window;
-		GLdouble aspect;
+		GLdouble size[2];
+		GLdouble scale;
 	public:
-		Window(size_t width, size_t height, const char* title);
+		Window(int, int, const char*);
 		virtual ~Window();
 		explicit operator bool();
 		void swapBuffers() const;
-		static void resize(GLFWwindow* const window, int width, int height);
-		GLdouble getAspect() const { return aspect; }
+		static void resize(GLFWwindow* const, int, int);
+		const GLdouble* getSize() const { return size; }
+		GLdouble getScale() const { return scale; }
 	};
 }

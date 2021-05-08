@@ -17,9 +17,9 @@ constexpr size_t HEIGHT = 480;
 
 constexpr prs::Object::Vertex rectangleVetex[] =
 {
-	{ -1.0, -1.0},
-	{ 0.0, 0.5},
-	{ 0.4, 0.1}
+	{ -0.3, -0.2},
+	{ 0.0, 0.0},
+	{ -0.1, 0.25}
 };
 
 int main()
@@ -47,15 +47,29 @@ int main()
 	// プログラムオブジェクトを作成する
 	const GLuint program(prs::loadProgram("point.vert", "point.frag"));
 
+	const GLint sizeLoc(glGetUniformLocation(program, "size"));
+	const GLint scaleLoc(glGetUniformLocation(program, "scale"));
+
+
 	// 図形データの作成
 	std::unique_ptr<const prs::Shape> shape(new prs::Shape(2, 4, rectangleVetex));
 
 	while ((bool)window)
 	{
+		//ウィンドウを削除
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		// シェーダプログラムの使用開始
 		glUseProgram(program);
 		
+		// uniform変数に値を設定する
+		glUniform2dv(sizeLoc, 1, window.getSize());
+		glUniform1d(scaleLoc, window.getScale());
+		
+		// 図形の描画
 		shape->draw();
+
+		// カラーバッファの入れ替え
 		window.swapBuffers();
 	}
 

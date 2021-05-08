@@ -1,8 +1,8 @@
 #include "Window.hpp"
 
 
-prs::Window::Window(size_t width, size_t height, const char* title = "Title") :
-	window(glfwCreateWindow(width, height, title, nullptr, nullptr))
+prs::Window::Window(int width, int height, const char* title = "Title") :
+	window(glfwCreateWindow(width, height, title, nullptr, nullptr)), scale(100.)
 {
 	if (window == nullptr)
 	{
@@ -37,7 +37,9 @@ prs::Window::~Window()
 prs::Window::operator bool()
 {
 	glfwWaitEvents();
+	if (glfwGetKey(window, GLFW_KEY_UP)) scale+=1.;
 	if (glfwGetKey(window, GLFW_KEY_ENTER)) return false;
+	std::cout << scale << std::endl;
 	return !glfwWindowShouldClose(window);
 }
 
@@ -57,6 +59,8 @@ void prs::Window::resize(GLFWwindow* const window, int width, int height)
 
 	if (instance != nullptr)
 	{
-		instance->aspect = static_cast<GLdouble>(width) / static_cast<GLdouble>(height);
+		instance->size[0] = static_cast<GLdouble>(width);
+		instance->size[1] = static_cast<GLdouble>(height);
 	}
+
 }
