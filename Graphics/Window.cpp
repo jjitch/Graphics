@@ -22,6 +22,11 @@ prs::Window::Window(size_t width, size_t height, const char* title = "Title") :
 
 	// 垂直同期のタイミングを待つ
 	glfwSwapInterval(1);
+
+	glfwSetWindowUserPointer(window, this);
+
+	glfwSetWindowSizeCallback(window, resize);
+	resize(window, width, height);
 }
 
 prs::Window::~Window()
@@ -32,10 +37,26 @@ prs::Window::~Window()
 prs::Window::operator bool()
 {
 	glfwWaitEvents();
+	if (glfwGetKey(window, GLFW_KEY_ENTER)) return false;
 	return !glfwWindowShouldClose(window);
 }
 
 void prs::Window::swapBuffers() const
 {
 	glfwSwapBuffers(window);
+}
+
+void prs::Window::resize(GLFWwindow* const window, int width, int height)
+{
+	int fbWidth, fbHeight;
+	glfwGetFramebufferSize(window, &fbWidth, &fbHeight);
+
+	glViewport(0, 0, fbWidth, fbHeight);
+
+	Window* const instance(static_cast<Window*>(glfwGetWindowUserPointer(window)));
+
+	if (instance != nullptr)
+	{
+		instance->aspect = static_cast<GLdouble>(width) / static_cast<GLdouble>(height);
+	}
 }
