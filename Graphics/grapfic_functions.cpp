@@ -23,7 +23,7 @@ namespace prs
 			if (printShaderInfoLog(fobj, "fragment shader")) glAttachShader(program, fobj);
 			glDeleteShader(fobj);
 		}
-		glBindAttribLocation(program, 0, "position");
+		glBindAttribLocation(program, C::attrLoc, "position");
 		glBindFragDataLocation(program, 0, "fragment");
 		glLinkProgram(program);
 		if (printProgramInfoLog(program)) return program;

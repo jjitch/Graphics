@@ -8,11 +8,10 @@
 #include "Object.hpp"
 #include "Shape.hpp"
 #include "Window.hpp"
+#include "constants.hpp"
+
 using std::cout;
 using std::endl;;
-
-constexpr size_t WIDTH = 640;
-constexpr size_t HEIGHT = 480;
 
 std::vector<glm::dvec2> vertex{
 	{-0.1,-0.9}, {0.0, 2.5}, {1.2, -1.2}
@@ -36,9 +35,9 @@ int main()
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	prs::Window window(WIDTH, HEIGHT, "SMAPLE");
+	prs::Window window(C::winWidth, C::winHeight, "SMAPLE");
 
-	glClearColor(0.f, 0.f, 0.2f, 0.2f);
+	glClearColor(C::bgRed, C::bgGreen, C::bgBlue, C::bgAlpha);
 
 	// プログラムオブジェクトを作成する
 	const GLuint program(prs::loadProgram("point.vert", "point.frag"));

@@ -20,16 +20,15 @@ prs::Object::Object(const std::vector<glm::dvec2>& vertex):Vertex(vertex)
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
 	// 頂点バッファオブジェクトのメモリを確保し、そこにデータ(頂点属性)を転送する。
-	glBufferData(GL_ARRAY_BUFFER, vertex.size() * sizeof(glm::dvec2), &vertex[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertex.size() * sizeof(glm::dvec2), &vertex[0], GL_DYNAMIC_DRAW);
 
 
 	// glVertexAttribPointer(GLuint index, GLuint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid *pointer)
 	// index : シェーダープログラムのリンク時にglBindAttribLocation()関数で指定した、データを受け取るattribute変数の場所。
 	// このシェーダープログラムではvertexの唯一のメンバpositionのindexに0を指定したので、ここでは0を指定する。
-	glVertexAttribPointer(0, 2, GL_DOUBLE, GL_TRUE, 0, 0);
-	//glVertexAttribLPointer(0, size, GL_DOUBLE, 0, 0);
+	glVertexAttribPointer(C::attrLoc, C::vertexDim, GL_DOUBLE, GL_TRUE, 0, 0);
 
-	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(C::attrLoc);
 }
 
 prs::Object::~Object()
