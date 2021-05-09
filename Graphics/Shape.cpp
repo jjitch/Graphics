@@ -3,9 +3,8 @@
 namespace prs
 {
 	
-	Shape::Shape(GLuint size, GLsizei vertexcount, const Object::Vertex *vertex)
-		:object(new Object(size, vertexcount, vertex)), vertexcount(vertexcount){}
-	
+	Shape::Shape(const std::vector<glm::dvec2>& vertex):object(new Object(vertex)) {}
+
 	void Shape::draw() const
 	{
 		object->bind();
@@ -14,6 +13,6 @@ namespace prs
 	
 	void Shape::execute() const
 	{
-		glDrawArrays(GL_TRIANGLES, 0, vertexcount);
+		glDrawArrays(GL_LINE_LOOP, 0, static_cast<GLsizei>(object->Vertex.size()));
 	}
 }

@@ -14,12 +14,8 @@ using std::endl;;
 constexpr size_t WIDTH = 640;
 constexpr size_t HEIGHT = 480;
 
-
-constexpr prs::Object::Vertex rectangleVetex[] =
-{
-	{ -0.3, -0.2},
-	{ 0.0, 0.0},
-	{ -0.1, 0.25}
+std::vector<glm::dvec2> vertex{
+	{-0.1,-0.9}, {0.0, 2.5}, {1.2, -1.2}
 };
 
 int main()
@@ -52,7 +48,7 @@ int main()
 	const GLint locationLoc(glGetUniformLocation(program, "location"));
 
 	// 図形データの作成
-	std::unique_ptr<const prs::Shape> shape(new prs::Shape(2, 4, rectangleVetex));
+	std::unique_ptr<const prs::Shape> shape(new prs::Shape(vertex));
 
 	while ((bool)window)
 	{
