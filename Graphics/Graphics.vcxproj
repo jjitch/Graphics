@@ -163,6 +163,7 @@
     <None Include="point.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="constants.hpp" />
     <ClInclude Include="graphic_functions.hpp" />
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="Shape.hpp" />
