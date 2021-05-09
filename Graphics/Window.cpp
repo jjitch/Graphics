@@ -2,7 +2,8 @@
 
 
 prs::Window::Window(int width, int height, const char* title = "Title") :
-	window(glfwCreateWindow(width, height, title, nullptr, nullptr)), scale(100.)
+	window(glfwCreateWindow(width, height, title, nullptr, nullptr)),
+	scale(100.), location{0.,0.}, keyStatus(GLFW_RELEASE)
 {
 	if (window == nullptr)
 	{
@@ -23,9 +24,18 @@ prs::Window::Window(int width, int height, const char* title = "Title") :
 	// 垂直同期のタイミングを待つ
 	glfwSwapInterval(1);
 
+	// サイズ変更時のコールバック関数
+	glfwSetWindowSizeCallback(window, resize);
+
+	// マウスホイール操作時のコールバック関数
+	glfwSetScrollCallback(window, wheel);
+
+	glfwSetKeyCallback(window, keyboard);
+
+	//このインスタンスのthisポインタを紐づけておく
 	glfwSetWindowUserPointer(window, this);
 
-	glfwSetWindowSizeCallback(window, resize);
+	//開いたウィンドウの初期設定
 	resize(window, width, height);
 }
 
@@ -36,10 +46,45 @@ prs::Window::~Window()
 
 prs::Window::operator bool()
 {
-	glfwWaitEvents();
-	if (glfwGetKey(window, GLFW_KEY_UP)) scale+=1.;
-	if (glfwGetKey(window, GLFW_KEY_ENTER)) return false;
-	std::cout << scale << std::endl;
+	/*if (keyStatus==GLFW_RELEASE)
+	{
+		glfwWaitEvents();
+	}
+	else
+	{
+		glfwPollEvents();
+	}*/
+
+	glfwPollEvents();
+
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+	{
+		location[0] -= 2. / size[0];
+	}
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	{
+		location[0] += 2. / size[0];
+	}
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+	{
+		location[1] -= 2. / size[1];
+	}
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+	{
+		location[1] += 2. / size[1];
+	}
+
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1)!=GLFW_RELEASE)
+	{
+
+		double x, y;
+		glfwGetCursorPos(window, &x, &y);
+
+		location[0] = static_cast<GLdouble>(x) * 2. / size[0] - 1.;
+		location[1] = static_cast<GLdouble>(-y) * 2. / size[1] + 1.;
+
+	}
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE)||glfwGetKey(window, GLFW_KEY_ENTER)) return false;
 	return !glfwWindowShouldClose(window);
 }
 
@@ -63,4 +108,18 @@ void prs::Window::resize(GLFWwindow* const window, int width, int height)
 		instance->size[1] = static_cast<GLdouble>(height);
 	}
 
+}
+
+void prs::Window::wheel(GLFWwindow* window, double x, double y){
+	Window* const instance(static_cast<Window*>(glfwGetWindowUserPointer(window)));
+
+	if (instance!=nullptr)
+	{
+		instance->scale += static_cast<GLdouble>(y)*10.;
+	}
+}
+
+void prs::Window::keyboard(GLFWwindow* window, int key, int scancode, int action, int mods){
+	Window* const instance(static_cast<Window*>(glfwGetWindowUserPointer(window)));
+	if (instance != nullptr) instance->keyStatus = action;
 }

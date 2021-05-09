@@ -49,7 +49,7 @@ int main()
 
 	const GLint sizeLoc(glGetUniformLocation(program, "size"));
 	const GLint scaleLoc(glGetUniformLocation(program, "scale"));
-
+	const GLint locationLoc(glGetUniformLocation(program, "location"));
 
 	// 図形データの作成
 	std::unique_ptr<const prs::Shape> shape(new prs::Shape(2, 4, rectangleVetex));
@@ -65,6 +65,7 @@ int main()
 		// uniform変数に値を設定する
 		glUniform2dv(sizeLoc, 1, window.getSize());
 		glUniform1d(scaleLoc, window.getScale());
+		glUniform2dv(locationLoc, 1, window.getLocation());
 		
 		// 図形の描画
 		shape->draw();
