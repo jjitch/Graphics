@@ -12,6 +12,7 @@
 #include "Shape.hpp"
 #include "Window.hpp"
 #include "constants.hpp"
+#include "Primitives.hpp"
 
 using std::cout;
 using std::endl;;
@@ -44,44 +45,9 @@ int main()
 	const GLint modelLoc(glGetUniformLocation(program, "model"));
 	const GLint viewLoc(glGetUniformLocation(program, "view"));
 	const GLint projLoc(glGetUniformLocation(program, "projection"));
-	const GLint viewModelLoc(glGetUniformLocation(program, "viewModel"));
 
-	// ê}å`ÉfÅ[É^ÇÃçÏê¨
-	const std::vector<glm::dvec3> RegelarOctohedron{
-		{  0.0,  1.0,  0.0 },
-		{ -1.0,  0.0,  0.0 },
-		{  0.0, -1.0,  0.0 },
-		{  1.0,  0.0,  0.0 },
-		{  0.0,  1.0,  0.0 },
-		{  0.0,  0.0,  1.0 },
-		{  0.0, -1.0,  0.0 },
-		{  0.0,  0.0, -1.0 },
-		{ -1.0,  0.0,  0.0 },
-		{  0.0,  0.0,  1.0 },
-		{  1.0,  0.0,  0.0 },
-		{  0.0,  0.0, -1.0 }
-	};
-	const std::vector<glm::dvec3> axes{
-		{  0.0,  0.0,  0.0 },
-		{  1.0,  0.0,  0.0 },
-		{  0.0,  0.0,  0.0 },
-		{  0.0,  1.0,  0.0 },
-		{  0.0,  0.0,  0.0 },
-		{  0.0,  0.0,  1.0 },
-		{  0.0,  0.0,  0.0 }
-	};
-	const std::vector<glm::dvec3> Square{
-		{ -1.0, -1.0, 0.0 },
-		{ -1.0,  1.0, 0.0 },
-		{  1.0,  1.0, 0.0 },
-		{  1.0, -1.0, 0.0 },
-	};
-	const std::vector<glm::dvec3> Triangle{
-		{ -0.1, -0.1, 0.0 },
-		{  0.0,  0.1, 0.0 },
-		{  0.1, -0.1, 0.0 },
-	};
-	std::unique_ptr<const prs::Shape> shape(new prs::Shape(RegelarOctohedron));
+	
+	std::unique_ptr<const prs::Shape> shape(new prs::Shape(primitive::RegelarOctohedron));
 
 	//const double aspect = static_cast<double>(C::winHeight) / static_cast<double>(C::winWidth);
 	const double aspect = sqrt(2) / 2.;
@@ -101,27 +67,23 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// model transform matrix
-		const glm::dmat4 I(1.);
 		const GLdouble* const size(window.getSize());
 		const GLdouble scale(window.getScale() * 2.);
-		//const GLdouble w(scale / size[0]), h(scale / size[1]);
 		const GLdouble w(size[0] / scale), h(size[1] / scale);
-		//const GLdouble w(scale), h(scale);
 		const GLdouble* const location(window.getLocation());
 		const glm::dvec3 translating(location[0], location[1], 0.);
-		const glm::dvec3 scaling(scale / size[0], scale / size[1], 1.);
 		const glm::dmat4 model = glm::translate(glm::dmat4(1.), translating);
-		const glm::dmat4 projection = glm::ortho(-w, w, -h, h, -1., 10.);
-		const glm::dmat4 viewModel = view * model;
+		const glm::dmat4 projection = glm::ortho(-w, w, -h, h, -10., 10.);
 
 		if (glfwGetKey(window.window, GLFW_KEY_D) == GLFW_PRESS && !pressed)
 		{
-			std::cout << "debug!\n";
+			cout << "debug!\n";
 			cout << "scale\n" << scale << "\n\n";
-			std::cout << "translating vector\n" << glm::to_string(translating) << "\n\n";
-			std::cout << "model matrix\n" << glm::to_string(model) << "\n\n";
-			std::cout << "view matrix\n" << glm::to_string(view) << "\n\n";
-			std::cout << "projection matrix\n" << glm::to_string(projection) << std::endl;
+			cout << "translating vector\n" << glm::to_string(translating) << "\n\n";
+			cout << "model matrix\n" << glm::to_string(model) << "\n\n";
+			cout << "view matrix\n" << glm::to_string(view) << "\n\n";
+			cout << glm::length(view[0]) << endl;
+			cout << "projection matrix\n" << glm::to_string(projection) << endl;
 
 			pressed = true;
 		}
@@ -134,7 +96,6 @@ int main()
 		glUniformMatrix4dv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniformMatrix4dv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4dv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
-		glUniformMatrix4dv(viewModelLoc, 1, GL_TRUE, glm::value_ptr(viewModel));
 
 		// ê}å`ÇÃï`âÊ
 		shape->draw();

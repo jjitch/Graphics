@@ -1,7 +1,6 @@
 #version 460 core
 uniform dmat4 model;
 uniform dmat4 view;
-uniform dmat4 viewModel;
 uniform dmat4 projection;
 in vec4 position;
 void main(void)

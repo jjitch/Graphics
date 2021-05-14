@@ -166,6 +166,7 @@
     <ClInclude Include="constants.hpp" />
     <ClInclude Include="graphic_functions.hpp" />
     <ClInclude Include="Object.hpp" />
+    <ClInclude Include="Primitives.hpp" />
     <ClInclude Include="Shape.hpp" />
     <ClInclude Include="Window.hpp" />
   </ItemGroup>
