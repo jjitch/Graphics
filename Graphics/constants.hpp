@@ -2,7 +2,6 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-
 namespace C
 {
 	constexpr GLclampf bgRed = 0.f;

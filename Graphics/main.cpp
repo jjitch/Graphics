@@ -117,6 +117,7 @@ int main()
 		if (glfwGetKey(window.window, GLFW_KEY_D) == GLFW_PRESS && !pressed)
 		{
 			std::cout << "debug!\n";
+			cout << "scale\n" << scale << "\n\n";
 			std::cout << "translating vector\n" << glm::to_string(translating) << "\n\n";
 			std::cout << "model matrix\n" << glm::to_string(model) << "\n\n";
 			std::cout << "view matrix\n" << glm::to_string(view) << "\n\n";
