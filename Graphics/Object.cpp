@@ -1,6 +1,6 @@
 #include "Object.hpp"
 
-prs::Object::Object(const std::vector<glm::dvec3>& vertex):Vertex(vertex)
+prs::Object::Object(const std::vector<glm::dvec3>& vertex, const std::vector<GLuint>& index):Vertex(vertex)
 {
 	// 頂点配列オブジェクトVAOを作る
 	glGenVertexArrays(1, &vao);
@@ -29,12 +29,17 @@ prs::Object::Object(const std::vector<glm::dvec3>& vertex):Vertex(vertex)
 	glVertexAttribPointer(C::attrLoc, C::vertexDim, GL_DOUBLE, GL_TRUE, 0, 0);
 
 	glEnableVertexAttribArray(C::attrLoc);
+
+	glGenBuffers(1, &ibo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index.size() * sizeof(GLuint), index.data(), GL_DYNAMIC_DRAW);
 }
 
 prs::Object::~Object()
 {
 	glDeleteVertexArrays(1, &vao);
 	glDeleteBuffers(1, &vbo);
+	glDeleteBuffers(1, &ibo);
 }
 
 void prs::Object::bind() const
