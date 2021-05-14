@@ -3,17 +3,18 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "constants.hpp"
 
 namespace prs
 {
 	class Window
 	{
-		GLFWwindow* const window;
 		GLdouble size[2];
 		GLdouble scale;
 		GLdouble location[2];
 		int keyStatus;
 	public:
+		GLFWwindow* const window;
 		Window(int, int, const char*);
 		virtual ~Window();
 		explicit operator bool();

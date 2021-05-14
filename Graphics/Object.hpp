@@ -19,7 +19,7 @@ namespace prs
 		Object& operator=(const Object& o) {}
 
 	public:
-		std::vector<glm::dvec2> Vertex;
+		std::vector<glm::dvec3> Vertex;
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
@@ -27,6 +27,7 @@ namespace prs
 		/// <param name="vertexcount">頂点の数</param>
 		/// <param name="vertex">頂点属性を格納した配列</param>
 		Object(const std::vector<glm::dvec2>&);
+		Object(const std::vector<glm::dvec3>&);
 		virtual ~Object();
 
 		void bind() const;

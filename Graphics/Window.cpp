@@ -3,7 +3,7 @@
 
 prs::Window::Window(int width, int height, const char* title = "Title") :
 	window(glfwCreateWindow(width, height, title, nullptr, nullptr)),
-	scale(100.), location{0.,0.}, keyStatus(GLFW_RELEASE)
+	scale(C::initialScale), location{0.,0.}, keyStatus(GLFW_RELEASE)
 {
 	if (window == nullptr)
 	{
@@ -59,19 +59,19 @@ prs::Window::operator bool()
 
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 	{
-		location[0] -= 2. / size[0];
+		location[0] -= C::dirKeySensitivity / size[0];
 	}
 	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 	{
-		location[0] += 2. / size[0];
+		location[0] += C::dirKeySensitivity / size[0];
 	}
 	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 	{
-		location[1] -= 2. / size[1];
+		location[1] -= C::dirKeySensitivity / size[1];
 	}
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 	{
-		location[1] += 2. / size[1];
+		location[1] += C::dirKeySensitivity / size[1];
 	}
 
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_1)!=GLFW_RELEASE)
@@ -115,7 +115,7 @@ void prs::Window::wheel(GLFWwindow* window, double x, double y){
 
 	if (instance!=nullptr)
 	{
-		instance->scale += static_cast<GLdouble>(y)*10.;
+		instance->scale += static_cast<GLdouble>(y)*C::wheelSensitivity;
 	}
 }
 

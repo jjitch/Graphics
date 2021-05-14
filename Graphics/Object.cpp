@@ -1,6 +1,6 @@
 #include "Object.hpp"
 
-prs::Object::Object(const std::vector<glm::dvec2>& vertex):Vertex(vertex)
+prs::Object::Object(const std::vector<glm::dvec3>& vertex):Vertex(vertex)
 {
 	// 頂点配列オブジェクトVAOを作る
 	glGenVertexArrays(1, &vao);
@@ -20,7 +20,7 @@ prs::Object::Object(const std::vector<glm::dvec2>& vertex):Vertex(vertex)
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
 	// 頂点バッファオブジェクトのメモリを確保し、そこにデータ(頂点属性)を転送する。
-	glBufferData(GL_ARRAY_BUFFER, vertex.size() * sizeof(glm::dvec2), &vertex[0], GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertex.size() * sizeof(glm::dvec3), vertex.data(), GL_DYNAMIC_DRAW);
 
 
 	// glVertexAttribPointer(GLuint index, GLuint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid *pointer)

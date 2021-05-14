@@ -4,76 +4,37 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
+#include <glm/glm.hpp>
+#include <glm/gtx/string_cast.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
-bool readShaderSource1(const char* name, std::vector<char>& buffer)
-{
-	if (name == NULL) return false;
-	std::ifstream file(name, std::ios_base::in | std::ios_base::out | std::ios_base::binary);
-	if (file.fail())
-	{
-		std::cerr << "Error: Can't open source file: " << name << std::endl;
-		return false;
-	}
-	file.seekg(0L, std::ios::end);
-	size_t length = static_cast<size_t>(file.tellg());
-	buffer.resize(length + 1);
 
-	file.seekg(0L, std::ios::beg);
-	file.read(buffer.data(), length);
-	buffer[length] = '\0';
-
-	if (file.fail())
-	{
-		std::cerr << "Error: Couldn't read source file: " << name << std::endl;
-		file.close();
-		return false;
-	}
-	file.close();
-	return true;
-}
-
-int readShaderSource(std::string fileName)
-{
-	//ファイルの読み込み
-	std::ifstream ifs(fileName, std::ios::binary);
-	if (!ifs)
-	{
-		std::cout << "error" << std::endl;
-		return -1;
-	}
-
-	std::string source;
-	std::string line;
-	while (getline(ifs, line))
-	{
-		source += line + "\n";
-	}
-
-	// シェーダのソースプログラムをシェーダオブジェクトへ読み込む
-	const char* sourcePtr = (const char*)source.c_str();
-	size_t length = source.length();
-	//glShaderSource(shaderObj, 1, &sourcePtr, &length);
-	std::cout << sourcePtr << std::endl;
-	return 0;
-}
-
-class A
-{
-public:
-	int a;
-	A(int _a) : a(_a) {}
-};
+template<class T> void p(T v) { std::cout << glm::to_string(v) << std::endl; }
 
 int main()
 {
 	using namespace std;
-	A stack(22);
-	A* heap = new A(30);
-	cout << stack.a << endl;
-	cout << heap->a << endl;
-	A* stack_ptr = &stack;
-	cout << stack_ptr->a << endl;
-	cout << (*stack_ptr).a << endl;
-	//delete heap;
-	//delete stack_ptr;
+	using namespace glm;
+	const double size[2] = { 640., 480. };
+	const double scale(200.);
+	const double location[2] = { 0.,0. };
+
+	const glm::dvec3 eye(0., 0., 0.);
+	const glm::dvec3 center(0., 0., -1.);
+	const glm::dvec3 up(0., 1., 0.);
+	const glm::dmat4 view = glm::lookAt(eye, center, up);
+	const double w(scale / size[0]), h(scale / size[1]);
+	const glm::dvec3 translating(location[0], location[1], 0.);
+	const glm::dvec3 scaling(scale / size[0], scale / size[1], 1.);
+	const glm::dmat4 model = glm::translate(glm::dmat4(1.), translating);
+	const glm::dmat4 projection = glm::ortho(-w, w, -h, h, 1., 10.);
+	const glm::dmat4 viewModel = view * model;
+	p(model);
+	p(view);
+	p(projection);
+	p(projection*view*model);
+
+	mat4 a = {};
+	mat4 b = {};
+	p(a);
 }

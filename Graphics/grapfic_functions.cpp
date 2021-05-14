@@ -24,7 +24,7 @@ namespace prs
 			glDeleteShader(fobj);
 		}
 		glBindAttribLocation(program, C::attrLoc, "position");
-		glBindFragDataLocation(program, 0, "fragment");
+		glBindFragDataLocation(program, C::fragLoc, "fragment");
 		glLinkProgram(program);
 		if (printProgramInfoLog(program)) return program;
 		glDeleteProgram(program);
@@ -44,8 +44,8 @@ namespace prs
 			std::vector<GLchar> infoLog(bufSize);
 			std::string log;
 			GLsizei length;
-			glGetShaderInfoLog(shader, bufSize, &length, &log[0]);
-			std::cerr << log << std::endl;
+			glGetShaderInfoLog(shader, bufSize, &length, infoLog.data());
+			std::cerr << infoLog.data() << std::endl;
 		}
 		return static_cast<GLboolean>(status);
 	}
@@ -62,8 +62,8 @@ namespace prs
 		{
 			std::vector<GLchar> infoLog(bufSize);
 			GLsizei length;
-			glGetShaderInfoLog(program, bufSize, &length, &infoLog[0]);
-			std::cerr << infoLog[0] << std::endl;
+			glGetShaderInfoLog(program, bufSize, &length, infoLog.data());
+			std::cerr << infoLog.data() << std::endl;
 		}
 		return static_cast<GLboolean>(status);
 	}

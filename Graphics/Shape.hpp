@@ -22,7 +22,7 @@ namespace prs
 		/// <param name="size">頂点の次元</param>
 		/// <param name="vertexcount">頂点の数</param>
 		/// <param name="vertex">頂点の構造体</param>
-		Shape(const std::vector<glm::dvec2>&);
+		Shape(const std::vector<glm::dvec3>&);
 		/// <summary>
 		/// drawing
 		/// </summary>
