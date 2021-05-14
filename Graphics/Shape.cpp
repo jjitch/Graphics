@@ -2,8 +2,8 @@
 
 namespace prs
 {
-	Shape::Shape(const std::vector<glm::dvec3>& vertex) : object(new Object(vertex)) {}
-
+	Shape::Shape(const std::vector<glm::dvec3>& vertex, const std::vector<GLuint>& index)
+		: object(new Object(vertex, index)) {}
 
 	void Shape::draw() const
 	{
@@ -13,6 +13,6 @@ namespace prs
 	
 	void Shape::execute() const
 	{
-		glDrawArrays(GL_LINE_LOOP, 0, static_cast<GLsizei>(object->Vertex.size()));
+		glDrawElements(GL_LINES, object->index.size(), GL_UNSIGNED_INT, 0);
 	}
 }

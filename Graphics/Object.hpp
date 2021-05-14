@@ -1,5 +1,6 @@
 #pragma once
 #include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <vector>
 #include "constants.hpp"
@@ -22,7 +23,8 @@ namespace prs
 		Object& operator=(const Object& o) {}
 
 	public:
-		std::vector<glm::dvec3> Vertex;
+		std::vector<glm::dvec3> vertex;
+		std::vector<GLuint> index;
 		
 		Object(const std::vector<glm::dvec3>&, const std::vector<GLuint>&);
 		virtual ~Object();

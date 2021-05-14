@@ -1,6 +1,7 @@
 #include "Object.hpp"
 
-prs::Object::Object(const std::vector<glm::dvec3>& vertex, const std::vector<GLuint>& index):Vertex(vertex)
+prs::Object::Object(const std::vector<glm::dvec3>& _vertex, const std::vector<GLuint>& _index)
+	:vertex(_vertex), index(_index)
 {
 	// 頂点配列オブジェクトVAOを作る
 	glGenVertexArrays(1, &vao);
@@ -20,7 +21,7 @@ prs::Object::Object(const std::vector<glm::dvec3>& vertex, const std::vector<GLu
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
 	// 頂点バッファオブジェクトのメモリを確保し、そこにデータ(頂点属性)を転送する。
-	glBufferData(GL_ARRAY_BUFFER, vertex.size() * sizeof(glm::dvec3), vertex.data(), GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, _vertex.size() * sizeof(glm::dvec3), _vertex.data(), GL_DYNAMIC_DRAW);
 
 
 	// glVertexAttribPointer(GLuint index, GLuint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid *pointer)
@@ -32,7 +33,7 @@ prs::Object::Object(const std::vector<glm::dvec3>& vertex, const std::vector<GLu
 
 	glGenBuffers(1, &ibo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, index.size() * sizeof(GLuint), index.data(), GL_DYNAMIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _index.size() * sizeof(GLuint), _index.data(), GL_DYNAMIC_DRAW);
 }
 
 prs::Object::~Object()

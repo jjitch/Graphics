@@ -1,6 +1,6 @@
 #pragma once
 #include <memory>
-
+#include <GL/glew.h>
 #include "Object.hpp"
 
 namespace prs
@@ -22,7 +22,7 @@ namespace prs
 		/// <param name="size">頂点の次元</param>
 		/// <param name="vertexcount">頂点の数</param>
 		/// <param name="vertex">頂点の構造体</param>
-		Shape(const std::vector<glm::dvec3>&);
+		Shape(const std::vector<glm::dvec3>&, const std::vector<GLuint>&);
 		/// <summary>
 		/// drawing
 		/// </summary>
