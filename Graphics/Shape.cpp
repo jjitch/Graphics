@@ -13,6 +13,6 @@ namespace prs
 	
 	void Shape::execute() const
 	{
-		glDrawElements(GL_LINES, object->index.size(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_LINES, object->indexCount, GL_UNSIGNED_INT, 0);
 	}
 }

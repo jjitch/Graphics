@@ -1,7 +1,7 @@
 #include "Object.hpp"
 
 prs::Object::Object(const std::vector<glm::dvec3>& _vertex, const std::vector<GLuint>& _index)
-	:vertex(_vertex), index(_index)
+	:vertexCount(static_cast<GLuint>(_vertex.size())), indexCount(static_cast<GLuint>(_index.size()))
 {
 	// 頂点配列オブジェクトVAOを作る
 	glGenVertexArrays(1, &vao);
@@ -27,9 +27,9 @@ prs::Object::Object(const std::vector<glm::dvec3>& _vertex, const std::vector<GL
 	// glVertexAttribPointer(GLuint index, GLuint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid *pointer)
 	// index : シェーダープログラムのリンク時にglBindAttribLocation()関数で指定した、データを受け取るattribute変数の場所。
 	// このシェーダープログラムではvertexの唯一のメンバpositionのindexに0を指定したので、ここでは0を指定する。
-	glVertexAttribPointer(C::attrLoc, C::vertexDim, GL_DOUBLE, GL_TRUE, 0, 0);
+	glVertexAttribPointer(C::attrLocVertex, C::vertexDim, GL_DOUBLE, GL_TRUE, 0, 0);
 
-	glEnableVertexAttribArray(C::attrLoc);
+	glEnableVertexAttribArray(C::attrLocVertex);
 
 	glGenBuffers(1, &ibo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);

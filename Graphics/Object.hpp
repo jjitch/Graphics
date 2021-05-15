@@ -19,16 +19,17 @@ namespace prs
 
 		// インデックスバッファオブジェクト
 		GLuint ibo;
-		Object(const Object& o);
-		Object& operator=(const Object& o) {}
+
+		// コピーコンストラクタの禁止
+		Object(const Object&);
+		Object& operator=(const Object&) {}
 
 	public:
-		std::vector<glm::dvec3> vertex;
-		std::vector<GLuint> index;
+		const GLuint vertexCount;
+		const GLuint indexCount;
+		void bind() const;
 		
 		Object(const std::vector<glm::dvec3>&, const std::vector<GLuint>&);
 		virtual ~Object();
-
-		void bind() const;
 	};
 }

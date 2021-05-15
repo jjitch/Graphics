@@ -47,13 +47,13 @@ int main()
 	const GLint projLoc(glGetUniformLocation(program, "projection"));
 
 	
-	std::unique_ptr<const prs::Shape> shape(new prs::Shape(primitive::RegelarOctohedron));
+	std::unique_ptr<const prs::Shape> shape(new prs::Shape(primitive::cubeVertex, primitive::cubeIndex));
 
 	//const double aspect = static_cast<double>(C::winHeight) / static_cast<double>(C::winWidth);
 	const double aspect = sqrt(2) / 2.;
-	const glm::dvec3 eye=glm::normalize(glm::dvec3(1., 1., sqrt(2)*aspect/sqrt(1-pow(aspect,2))));
+	const glm::dvec3 eye=glm::normalize(glm::dvec3(0.6, -0.8, sqrt(2)*aspect/sqrt(1-pow(aspect,2))));
 	const glm::dvec3 center(0., 0., 0.);
-	const glm::dvec3 up(0., 1., 0.);
+	const glm::dvec3 up(0., 0., 1.);
 	const glm::dmat4 view = glm::lookAt(eye, center, up);
 	
 	// シェーダプログラムの使用開始
