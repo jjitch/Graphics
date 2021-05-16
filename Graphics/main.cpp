@@ -10,6 +10,7 @@
 #include "graphic_functions.hpp"
 #include "Object.hpp"
 #include "Shape.hpp"
+#include "SolidShapeIndex.hpp"
 #include "Window.hpp"
 #include "constants.hpp"
 #include "Primitives.hpp"
@@ -39,6 +40,14 @@ int main()
 
 	glClearColor(C::bgRed, C::bgGreen, C::bgBlue, C::bgAlpha);
 
+	glFrontFace(GL_CCW);
+	glCullFace(GL_BACK);
+	glEnable(GL_CULL_FACE);
+
+	glClearDepth(1.);
+	glDepthFunc(GL_LESS);
+	glEnable(GL_DEPTH_TEST);
+
 	// プログラムオブジェクトを作成する
 	const GLuint program(prs::loadProgram("point.vert", "point.frag"));
 
@@ -47,11 +56,12 @@ int main()
 	const GLint projLoc(glGetUniformLocation(program, "projection"));
 
 	
-	std::unique_ptr<const prs::Shape> shape(new prs::Shape(primitive::cubeVertex, primitive::cubeIndex));
+	std::unique_ptr<const prs::Shape> shape(new prs::SolidShapeIndex(primitive::cubeVertex,
+											primitive::solidCubeIndex,
+											primitive::cubeVertexColor));
 
-	//const double aspect = static_cast<double>(C::winHeight) / static_cast<double>(C::winWidth);
 	const double aspect = sqrt(2) / 2.;
-	const glm::dvec3 eye=glm::normalize(glm::dvec3(0.6, -0.8, sqrt(2)*aspect/sqrt(1-pow(aspect,2))));
+	glm::dvec3 eye=glm::normalize(glm::dvec3(0.6, -0.8, sqrt(2)*aspect/sqrt(1-pow(aspect,2))));
 	const glm::dvec3 center(0., 0., 0.);
 	const glm::dvec3 up(0., 0., 1.);
 	const glm::dmat4 view = glm::lookAt(eye, center, up);
@@ -60,19 +70,20 @@ int main()
 	glUseProgram(program);
 
 	bool pressed(false);
-
+	glfwSetTime(0.);
 	while ((bool)window)
 	{
 		//ウィンドウを削除
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// model transform matrix
+		const glm::dmat4 view = glm::lookAt(eye, center, up);
 		const GLdouble* const size(window.getSize());
-		const GLdouble scale(window.getScale() * 2.);
+		const GLdouble scale(window.getScale());
 		const GLdouble w(size[0] / scale), h(size[1] / scale);
 		const GLdouble* const location(window.getLocation());
 		const glm::dvec3 translating(location[0], location[1], 0.);
-		const glm::dmat4 model = glm::translate(glm::dmat4(1.), translating);
+		const glm::dmat4 model = glm::rotate(glm::translate(glm::dmat4(1.), translating), glfwGetTime(), glm::dvec3(0.,0.,1.));
 		const glm::dmat4 projection = glm::ortho(-w, w, -h, h, -10., 10.);
 
 		if (glfwGetKey(window.window, GLFW_KEY_D) == GLFW_PRESS && !pressed)

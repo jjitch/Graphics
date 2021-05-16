@@ -14,8 +14,12 @@ namespace prs
 	{
 		// 頂点配列オブジェクト
 		GLuint vao;
+
 		// 頂点バッファオブジェクト
 		GLuint vbo;
+
+		// 頂点バッファオブジェクト
+		GLuint cbo;
 
 		// インデックスバッファオブジェクト
 		GLuint ibo;
@@ -29,7 +33,9 @@ namespace prs
 		const GLuint indexCount;
 		void bind() const;
 		
-		Object(const std::vector<glm::dvec3>&, const std::vector<GLuint>&);
+		Object(const std::vector<glm::dvec3>&,
+			   const std::vector<GLuint>&,
+			   const std::vector<glm::dvec3>&);
 		virtual ~Object();
 	};
 }

@@ -4,37 +4,27 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
+#include <chrono>
 #include <glm/glm.hpp>
 #include <glm/gtx/string_cast.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-
-template<class T> void p(T v) { std::cout << glm::to_string(v) << std::endl; }
+using ll = long long;
 
 int main()
 {
-	using namespace std;
-	using namespace glm;
-	const double size[2] = { 640., 480. };
-	const double scale(200.);
-	const double location[2] = { 0.,0. };
-
-	const glm::dvec3 eye(0., 0., 0.);
-	const glm::dvec3 center(0., 0., -1.);
-	const glm::dvec3 up(0., 1., 0.);
-	const glm::dmat4 view = glm::lookAt(eye, center, up);
-	const double w(scale / size[0]), h(scale / size[1]);
-	const glm::dvec3 translating(location[0], location[1], 0.);
-	const glm::dvec3 scaling(scale / size[0], scale / size[1], 1.);
-	const glm::dmat4 model = glm::translate(glm::dmat4(1.), translating);
-	const glm::dmat4 projection = glm::ortho(-w, w, -h, h, 1., 10.);
-	const glm::dmat4 viewModel = view * model;
-	p(model);
-	p(view);
-	p(projection);
-	p(projection*view*model);
-
-	mat4 a = {};
-	mat4 b = {};
-	p(a);
+	const ll N = (ll)100000000;
+	float a = 0.;
+	float b = 0.0001;
+	auto start = std::chrono::system_clock::now();      // 計測スタート時刻を保存
+	for (ll i = 0; i < N; ++i)
+	{
+		a += b;
+	}
+	auto end = std::chrono::system_clock::now();       // 計測終了時刻を保存
+	auto dur = end - start;        // 要した時間を計算
+	auto msec = std::chrono::duration_cast<std::chrono::milliseconds>(dur).count();
+	// 要した時間をミリ秒（1/1000秒）に変換して表示
+	std::cout << msec << " milli sec \n";
+	return 0;
 }

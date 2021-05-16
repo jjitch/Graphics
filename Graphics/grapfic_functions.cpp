@@ -24,6 +24,7 @@ namespace prs
 			glDeleteShader(fobj);
 		}
 		glBindAttribLocation(program, C::attrLocVertex, "position");
+		glBindAttribLocation(program, C::attrLocColor, "color");
 		glBindFragDataLocation(program, C::fragLoc, "fragment");
 		glLinkProgram(program);
 		if (printProgramInfoLog(program)) return program;

@@ -1,7 +1,10 @@
 #include "Object.hpp"
 
-prs::Object::Object(const std::vector<glm::dvec3>& _vertex, const std::vector<GLuint>& _index)
-	:vertexCount(static_cast<GLuint>(_vertex.size())), indexCount(static_cast<GLuint>(_index.size()))
+prs::Object::Object(const std::vector<glm::dvec3>& _vertex,
+					const std::vector<GLuint>& _index,
+					const std::vector<glm::dvec3>& _color)
+	:vertexCount(static_cast<GLuint>(_vertex.size())),
+	indexCount(static_cast<GLuint>(_index.size()))
 {
 	// 頂点配列オブジェクトVAOを作る
 	glGenVertexArrays(1, &vao);
@@ -15,25 +18,26 @@ prs::Object::Object(const std::vector<glm::dvec3>& _vertex, const std::vector<GL
 	// buffers -> 作成した頂点バッファオブジェクトを格納する配列。
 	//            少なくともnの要素を持たなければいけない
 	glGenBuffers(1, &vbo);
-
-	// 頂点バッファオブジェクトの結合対象
-	// glBindBuffer(GLenum target, GLuint buffer)
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-	// 頂点バッファオブジェクトのメモリを確保し、そこにデータ(頂点属性)を転送する。
-	glBufferData(GL_ARRAY_BUFFER, _vertex.size() * sizeof(glm::dvec3), _vertex.data(), GL_DYNAMIC_DRAW);
-
-
-	// glVertexAttribPointer(GLuint index, GLuint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid *pointer)
-	// index : シェーダープログラムのリンク時にglBindAttribLocation()関数で指定した、データを受け取るattribute変数の場所。
-	// このシェーダープログラムではvertexの唯一のメンバpositionのindexに0を指定したので、ここでは0を指定する。
+	glBufferData(GL_ARRAY_BUFFER, _vertex.size() * sizeof(glm::dvec3), _vertex.data(), GL_STATIC_DRAW);
 	glVertexAttribPointer(C::attrLocVertex, C::vertexDim, GL_DOUBLE, GL_TRUE, 0, 0);
-
 	glEnableVertexAttribArray(C::attrLocVertex);
+
+	glGenBuffers(1, &cbo);
+	glBindBuffer(GL_ARRAY_BUFFER, cbo);
+	glBufferData(GL_ARRAY_BUFFER, _color.size() * sizeof(glm::dvec3), _color.data(), GL_STATIC_DRAW);
+	glVertexAttribPointer(C::attrLocColor, C::vertexDim, GL_DOUBLE, GL_TRUE, 0, 0);
+	glEnableVertexAttribArray(C::attrLocColor);
+
+	/*glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);*/
 
 	glGenBuffers(1, &ibo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _index.size() * sizeof(GLuint), _index.data(), GL_DYNAMIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _index.size() * sizeof(GLuint), _index.data(), GL_STATIC_DRAW);
+
+	/*glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);*/
 }
 
 prs::Object::~Object()

@@ -2,8 +2,10 @@
 
 namespace prs
 {
-	Shape::Shape(const std::vector<glm::dvec3>& vertex, const std::vector<GLuint>& index)
-		: object(new Object(vertex, index)) {}
+	Shape::Shape(const std::vector<glm::dvec3>& _vertex,
+				 const std::vector<GLuint>& _index,
+				 const std::vector<glm::dvec3>& _color)
+		: object(new Object(_vertex, _index, _color)) {}
 
 	void Shape::draw() const
 	{

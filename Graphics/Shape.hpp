@@ -11,6 +11,7 @@ namespace prs
 	/// </summary>
 	class Shape
 	{
+	protected:
 		/// <summary>
 		/// the data of figure
 		/// </summary>
@@ -22,7 +23,9 @@ namespace prs
 		/// <param name="size">頂点の次元</param>
 		/// <param name="vertexcount">頂点の数</param>
 		/// <param name="vertex">頂点の構造体</param>
-		Shape(const std::vector<glm::dvec3>&, const std::vector<GLuint>&);
+		Shape(const std::vector<glm::dvec3>&,
+			  const std::vector<GLuint>&,
+			  const std::vector<glm::dvec3>&);
 		/// <summary>
 		/// drawing
 		/// </summary>

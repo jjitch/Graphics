@@ -4,9 +4,9 @@
 
 namespace C
 {
-	constexpr GLclampf bgRed = 0.f;
-	constexpr GLclampf bgGreen = 0.f;
-	constexpr GLclampf bgBlue = 0.2f;
+	constexpr GLclampf bgRed = 0.8f;
+	constexpr GLclampf bgGreen = 0.8f;
+	constexpr GLclampf bgBlue = 0.8f;
 	constexpr GLclampf bgAlpha = 0.f;
 	constexpr GLuint vertexDim = 3;
 	constexpr GLuint attrLocVertex = 0;
